@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #cart {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            white-space: nowrap;
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        td img {
+            width: 50px;
+            height: auto;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .remove-btn i {
+            margin-right: 5px;
+        }
+
+        .remove-btn:hover {
+            background-color: darkred;
+        }
+
+        #cart-total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #cart-total h3 {
+            font-weight: normal;
+        }
+
+        #total-price {
+            font-weight: bold;
+            font-size: 20px;
+            color: #333;
+        }
+
+        #cart-empty-message {
+            text-align: center;
+            font-size: 20px;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            #cart {
+                width: 95%;
+            }
+
+            th,
+            td {
+                display: block;
+                text-align: right;
+                padding: 10px;
+            }
+
+            td img {
+                display: block;
+                margin: 0 auto 10px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section id="header">
+        <a href="#"><img src="IMG/Diamond-logos_transparent2.png" width="75px" class="logo" alt=""></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li id="lg-bag"><a href="cart.html"><i class="far fa-shopping-bag"></i><span
+                            id="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="cart" class="section-p1">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+            </tbody>
+        </table>
+        <div id="cart-total">
+            <h3>Total: <span id="total-price">$0</span></h3>
+        </div>
+    </section>
+
+
+    <footer class="section-p1">
+        <div class="col">
+            <h4>About us</h4>
+            <p>Diamond is a vibrant and trendy consumer <br>
+                electronics and lifestyle brand that <br>
+                offers an extensive range of cutting-edge <br>
+                products to enhance and simplify people's <br>
+                lives.The brand prides itself on <br>
+                delivering high-quality, reliable,<br>
+                and affordable gadgets and accessories <br>
+                that are designed to keep up with the <br>
+                fast-paced and dynamic lifestyle of the <br>
+                modern consumer.
+            </p>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+        </div>
+
+        <div class="col">
+
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> 8-11-164, Old Punjab National <br>
+                Bank Lane, J.P.N Road, Warangal,<br>
+                Telangana 506002</p>
+            <p><strong>Phone:</strong> (+91) 9177481016</p>
+            <p><strong>Hours:</strong> 10:00, Mon - Sat</p>
+        </div>
+
+
+        <div class="col">
+            <h4>Quick links</h4>
+            <a href="#">View Cart </a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#"> Help</a>
+        </div>
+
+        <div class="col">
+            <h4>Site Map</h4>
+            <a href="#"> Earbuds</a>
+            <a href="#">Speakers</a>
+            <a href="#">Watch strap </a>
+            <a href="#">headphones</a>
+            <a href="#">Neckbands</a>
+        </div>
+
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign In</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+        </div>
+
+        <div class="copyright">
+            <p>copyright © 2023 Diamond . All Rights Reserved</p>
+
+        </div>
+    </footer>
+
+    <script>
+        function getCartItems() {
+            return JSON.parse(localStorage.getItem("cart")) || [];
+        }
+
+        function displayCartItems() {
+            const cartItems = getCartItems();
+            const cartItemsContainer = document.getElementById("cart-items");
+            const totalPriceContainer = document.getElementById("total-price");
+            cartItemsContainer.innerHTML = '';  // Clear any existing items
+
+            let totalPrice = 0;
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<tr><td colspan="5" id="cart-empty-message">Your cart is empty</td></tr>';
+            } else {
+                cartItems.forEach((item, index) => {
+                    totalPrice += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <tr>
+                            <td><img src="${item.image}" alt="Product image"></td>
+                            <td>${item.name}</td>
+                            <td>${item.quantity}</td>
+                            <td>$${item.price}</td>
+                            <td><button class="remove-btn" onclick="removeCartItem(${index})"><i class="far fa-trash-alt"></i> Remove</button></td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Update total price
+            totalPriceContainer.innerText = `$${totalPrice.toFixed(2)}`;
+        }
+
+        // Function to remove an item from the cart
+        function removeCartItem(index) {
+            let cartItems = getCartItems();
+            cartItems.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cartItems));
+            displayCartItems();
+            updateCartCount();  // Update the cart count on the cart icon
+        }
+
+        // Function to update cart count on the navbar
+        function updateCartCount() {
+            const cartItems = getCartItems();
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById("cart-count").innerText = totalItems;
+        }
+
+        // Initialize cart on page load
+        window.onload = function () {
+            displayCartItems();
+            updateCartCount();
+        };
+    </script>
+
+</body>
+
+</html>
